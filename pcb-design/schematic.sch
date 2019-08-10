@@ -1,0 +1,125 @@
+EESchema Schematic File Version 4
+EELAYER 29 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L RF_Module:ESP32-WROOM-32 U?
+U 1 1 5D490EE4
+P 850 2550
+F 0 "U?" H 850 4131 50  0000 C CNN
+F 1 "ESP32-WROOM-32" H 850 4040 50  0000 C CNN
+F 2 "RF_Module:ESP32-WROOM-32" H 850 1050 50  0001 C CNN
+F 3 "https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32_datasheet_en.pdf" H 550 2600 50  0001 C CNN
+	1    850  2550
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:Q_NPN_BCE Q?
+U 1 1 5D493CD9
+P 2000 5700
+F 0 "Q?" H 2191 5746 50  0000 L CNN
+F 1 "Q_NPN_BCE" H 2191 5655 50  0000 L CNN
+F 2 "" H 2200 5800 50  0001 C CNN
+F 3 "~" H 2000 5700 50  0001 C CNN
+	1    2000 5700
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small_US R2
+U 1 1 5D49723D
+P 1700 5700
+F 0 "R2" V 1495 5700 50  0000 C CNN
+F 1 "220" V 1586 5700 50  0000 C CNN
+F 2 "" H 1700 5700 50  0001 C CNN
+F 3 "~" H 1700 5700 50  0001 C CNN
+	1    1700 5700
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	1450 3050 1600 3050
+$Comp
+L Device:Q_NPN_BCE Q?
+U 1 1 5D49F77C
+P 2000 4900
+F 0 "Q?" H 2191 4946 50  0000 L CNN
+F 1 "Q_NPN_BCE" H 2191 4855 50  0000 L CNN
+F 2 "" H 2200 5000 50  0001 C CNN
+F 3 "~" H 2000 4900 50  0001 C CNN
+	1    2000 4900
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small_US R1
+U 1 1 5D49F782
+P 1700 4900
+F 0 "R1" V 1495 4900 50  0000 C CNN
+F 1 "470" V 1586 4900 50  0000 C CNN
+F 2 "" H 1700 4900 50  0001 C CNN
+F 3 "~" H 1700 4900 50  0001 C CNN
+	1    1700 4900
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	1600 4900 1600 3050
+Wire Wire Line
+	1600 5700 1550 5700
+Wire Wire Line
+	1550 3150 1450 3150
+$Comp
+L Connector:Conn_01x01_Male J1
+U 1 1 5D4A2526
+P 2300 4700
+F 0 "J1" H 2272 4632 50  0000 R CNN
+F 1 "TempGauge" H 2272 4723 50  0000 R CNN
+F 2 "" H 2300 4700 50  0001 C CNN
+F 3 "~" H 2300 4700 50  0001 C CNN
+	1    2300 4700
+	-1   0    0    1   
+$EndComp
+$Comp
+L Connector:Conn_01x01_Male J2
+U 1 1 5D4A3714
+P 2300 5500
+F 0 "J2" H 2272 5432 50  0000 R CNN
+F 1 "FuelGauge" H 2272 5523 50  0000 R CNN
+F 2 "" H 2300 5500 50  0001 C CNN
+F 3 "~" H 2300 5500 50  0001 C CNN
+	1    2300 5500
+	-1   0    0    1   
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5D4A41B3
+P 2100 5100
+F 0 "#PWR?" H 2100 4850 50  0001 C CNN
+F 1 "GND" H 2105 4927 50  0000 C CNN
+F 2 "" H 2100 5100 50  0001 C CNN
+F 3 "" H 2100 5100 50  0001 C CNN
+	1    2100 5100
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5D4A53EC
+P 2100 5900
+F 0 "#PWR?" H 2100 5650 50  0001 C CNN
+F 1 "GND" H 2105 5727 50  0000 C CNN
+F 2 "" H 2100 5900 50  0001 C CNN
+F 3 "" H 2100 5900 50  0001 C CNN
+	1    2100 5900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1550 3150 1550 5700
+$EndSCHEMATC
