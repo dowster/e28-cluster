@@ -35,10 +35,10 @@
 static const can_filter_config_t can_filter_config = CAN_FILTER_CONFIG_ACCEPT_ALL();
 static const can_timing_config_t can_timing_config = CAN_TIMING_CONFIG_500KBITS();
 //Set TX queue length to 0 due to listen only mode
-static const can_general_config_t can_general_config = {.mode = CAN_MODE_LISTEN_ONLY,
+static const can_general_config_t can_general_config = {.mode = CAN_MODE_NORMAL,
                                               .tx_io = TX_GPIO_NUM, .rx_io = RX_GPIO_NUM,
                                               .clkout_io = CAN_IO_UNUSED, .bus_off_io = CAN_IO_UNUSED,
-                                              .tx_queue_len = 0, .rx_queue_len = 5,
+                                              .tx_queue_len = 10, .rx_queue_len = 10,
                                               .alerts_enabled = CAN_ALERT_NONE,
                                               .clkout_divider = 0};
 
@@ -55,11 +55,23 @@ static void output_configure() {
     dac_output_enable(DAC_CHANNEL_2);
 }
 
+/** 
+ * 
+ */
+static void write_to_fuel_gauge(int percent_full) {
+    int voltage = 70 + ((percent_full * 80) / 100);
+    voltage &= 255;
+            ESP_LOGI("FUEL VOLTAGE", "[V: %d, F: %d]", 
+                voltage, percent_full);
+    dac_output_voltage(DAC_CHANNEL_2, voltage);
+}
+
 static void can_receive_task(void *arg) {
 
     while(true) {
         can_message_t rx_msg;
         can_receive(&rx_msg, portMAX_DELAY);
+        ESP_LOGI("CAN_MSG", "ID: %2x", rx_msg.identifier);
         if (rx_msg.identifier == ID_ENGINE_SPEED_TEMP) {
             //int rpm = ((rx_msg.data[0] / 255) * 100) + ((rx_msg.data[1] / 16) * 1000);
             //int temp = rx_msg.data[2];
@@ -67,6 +79,7 @@ static void can_receive_task(void *arg) {
                 rx_msg.data[7], rx_msg.data[6], rx_msg.data[5], rx_msg.data[4], 
                 rx_msg.data[3], rx_msg.data[2], rx_msg.data[1], rx_msg.data[0]);
             ESP_LOGI(EXAMPLE_TAG, "Received master ping");
+            write_to_fuel_gauge(rx_msg.data[0]);
         }
         
         if (rx_msg.identifier == ID_VEHICLE_SPEED) {
@@ -101,16 +114,6 @@ static void flip_flap(void *arg) {
         vTaskDelay(pdMS_TO_TICKS(10 * coefficient));
     }
 
-}
-
-/** 
- * 
- */
-static void write_to_fuel_gauge(int percent_full) {
-    int voltage = 70 + ((percent_full * 80) / 100);
-            ESP_LOGI("FUEL VOLTAGE", "[V: %d, F: %d]", 
-                voltage, percent_full);
-    dac_output_voltage(DAC_CHANNEL_2, voltage);
 }
 
 /** 
@@ -151,48 +154,9 @@ void app_main(void)
     output_configure();
 
     xTaskCreate(can_receive_task, "CAN_rx", 4096, NULL, RX_TASK_PRIO, NULL);
-    xTaskCreate(flip_flap, "flip_flap", 4096, NULL, 8, NULL);
 
-    for (int i = 2; i >= 0; i--) {
-        printf("Changing in %d seconds...\n", i);
-        write_to_temp_gauge(250);
-        vTaskDelay(1000 / portTICK_PERIOD_MS);
-        coefficient++;
-    }
-
-    for (int i = 2; i >= 0; i--) {
-        printf("Changing in %d seconds...\n", i);
-        write_to_temp_gauge(240);
-        vTaskDelay(1000 / portTICK_PERIOD_MS);
-        coefficient++;
-    }
-
-    for (int i = 2; i >= 0; i--) {
-        printf("Changing in %d seconds...\n", i);
-        write_to_temp_gauge(200);
-        vTaskDelay(1000 / portTICK_PERIOD_MS);
-        coefficient++;
-    }
-
-    for (int i = 2; i >= 0; i--) {
-        printf("Changing in %d seconds...\n", i);
-        write_to_temp_gauge(150);
-        vTaskDelay(1000 / portTICK_PERIOD_MS);
-        coefficient++;
-    }
-
-    for (int i = 2; i >= 0; i--) {
-        printf("Changing in %d seconds...\n", i);
-        write_to_temp_gauge(100);
-        vTaskDelay(1000 / portTICK_PERIOD_MS);
-        coefficient++;
-    }
-
-    for (int i = 10; i >= 0; i--) {
+    for (int i = 120; i >= 0; i--) {
         printf("Restarting in %d seconds...\n", i);
-        //write_to_fuel_gauge(i);
-        //dac_output_voltage(DAC_CHANNEL_2, i);
-        coefficient++;
         vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
     printf("Restarting now.\n");
