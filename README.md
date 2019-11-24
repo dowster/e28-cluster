@@ -20,7 +20,7 @@ The temperature guage output will be an open collector NPN output from the E28 c
 
 ## Fuel Gauge Output
 
-This is pretty much the same as the temperature gauge but with a different calibration. I'll be using a lower value resistor on the gate of this transistor since the fuel gauge requires more current. This signal is also output to the onboard computer by default. See [OBC Outputs](OBC Outputs) for information on how I plan to control the OBC.
+This is pretty much the same as the temperature gauge but with a different calibration. I'll be using a lower value resistor on the gate of this transistor since the fuel gauge requires more current. This signal is also output to the onboard computer by default. See [OBC Outputs](#OBC-Outputs) for information on how I plan to control the OBC.
 
 ## Tachometer Output
 
