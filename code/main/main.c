@@ -22,6 +22,7 @@
 #include "fuel_gauge.c"
 #include "temp_gauge.c"
 #include "speedometer_gauge.c"
+#include "tachometer_gauge.c"
 
 /* --------------------- Definitions and static variables ------------------ */
 //Example Configuration
@@ -105,22 +106,27 @@ void app_main(void)
             (chip_info.features & CHIP_FEATURE_EMB_FLASH) ? "embedded" : "external");
 
     can_configure();
-    output_configure();
 
+    output_configure();
     setup_speedometer_gauge(GPIO_NUM_4);
+    setup_tachometer_gauge(GPIO_NUM_5);
 
 
     xTaskCreate(can_receive_task, "CAN_rx", 4096, NULL, RX_TASK_PRIO, NULL);
 
     
-        write_to_speedometer(3);
+    write_to_speedometer(3);
 
 
     for (uint32_t i = 120; i >= 1; i--) {
         printf("Restarting in %d seconds...\n", i);
         vTaskDelay(1000 / portTICK_PERIOD_MS);
         
+        write_to_fuel_gauge(i % 100);
+        write_to_temp_gauge(i + 100);
+        
         write_to_speedometer(i);
+        write_to_tachometer(i << 4);
     }
     printf("Restarting now.\n");
     fflush(stdout);
