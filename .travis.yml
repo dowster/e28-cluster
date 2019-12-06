@@ -1,0 +1,7 @@
+language: c++
+
+services:
+  - docker
+
+script:
+  - docker run --rm -v $PWD/code:/project -w /project espressif/idf idf.py build
