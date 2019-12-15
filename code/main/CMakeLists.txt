@@ -3,4 +3,5 @@ idf_component_register(SRCS "main.c"
                             "temp_gauge.c"
                             "speedometer_gauge.c"
                             "tachometer_gauge.c"
+                            "indicator_lights.c"
                     INCLUDE_DIRS ".")

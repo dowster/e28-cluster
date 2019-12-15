@@ -52,7 +52,7 @@ void write_to_fuel_gauge(int percent_full) {
     } else {
         int voltage = 70 + ((percent_full * 80) / 100);
         voltage &= 255;
-        ESP_LOGI("FUEL VOLTAGE", "[V: %d, F: %d]", voltage, percent_full);
+        ESP_LOGI("FUEL VOLTAGE", "[V: %d, %% Full: %d]", voltage, percent_full);
         dac_output_voltage(fuel_gauge_channel, voltage);
     }
 }
