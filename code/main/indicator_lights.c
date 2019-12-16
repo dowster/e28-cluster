@@ -1,5 +1,3 @@
-#pragma once
-
 #include <driver/i2c.h>
 
 #include "mcp23017.h"
@@ -63,7 +61,7 @@ void indicators_init() {
     i2c_master_write_byte(cmd, MCP23017_IOCON_SEQOP, I2C_ACK_ENABLE);
     i2c_master_stop(cmd);
     i2c_master_start(cmd);
-    i2c_msater_write_byte(cmd, EXPANDER_I2C_ADDRESS, I2C_ACK_ENABLE);
+    i2c_master_write_byte(cmd, EXPANDER_I2C_ADDRESS, I2C_ACK_ENABLE);
     i2c_master_write_byte(cmd, MCP23017_IODIRA, I2C_ACK_ENABLE);
     i2c_master_write_byte(cmd, 0x00, I2C_ACK_ENABLE); // Set IODIR of register A to output
     i2c_master_write_byte(cmd, 0x00, I2C_ACK_ENABLE); // Set IODIR of register B to output
@@ -110,7 +108,7 @@ void indicator_deactivate(uint8_t pin) {
     if(pin > 15) 
         return;
 
-    INDICATOR_OUTPUT_STATUS &= !( 1 << pin );
+    INDICATOR_OUTPUT_STATUS &= ~( 1 << pin );
     indicator_write_status();
 }
 
