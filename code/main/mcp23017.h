@@ -1,5 +1,11 @@
 #pragma once
 
+/**
+ * Definitions for the MCP23017 I2C IO expander IC.
+ * 
+ * Datasheet: http://ww1.microchip.com/downloads/en/DeviceDoc/20001952C.pdf
+ */
+
 #define MCP23017_IODIRA      0x00
 #define MCP23017_IODIRB      0x01
 #define MCP23017_IODIR_IO7  (1 << 7)
