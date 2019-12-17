@@ -5,7 +5,7 @@ services:
   - docker
 
 script:
-  - docker run --rm -v $PWD/code:/project -w /project espressif/idf idf.py build
+  - docker run --rm -v $PWD/code:/project -w /project espressif/idf:release-v4.0 idf.py build
 
 before_deploy:
  - tar -zcf e28-cluster-${TRAVIS_TAG}-${TRAVIS_BUILD_NUMBER}.tar.gz code/build
