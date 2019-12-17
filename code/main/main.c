@@ -23,6 +23,7 @@
 #include "temp_gauge.c"
 #include "speedometer_gauge.c"
 #include "tachometer_gauge.c"
+#include "simpbms_comms.c"
 
 /* --------------------- Definitions and static variables ------------------ */
 //Example Configuration
@@ -58,34 +59,6 @@ static void can_configure() {
 static void output_configure() {
     setup_temp_gauge(DAC_CHANNEL_1);
     setup_fuel_gauge(DAC_CHANNEL_2, -1);
-}
-
-
-static void can_receive_task(void *arg) {
-
-    while(true) {
-        can_message_t rx_msg;
-        can_receive(&rx_msg, portMAX_DELAY);
-        ESP_LOGI("CAN_MSG", "ID: %2x", rx_msg.identifier);
-        if (rx_msg.identifier == ID_ENGINE_SPEED_TEMP) {
-            //int rpm = ((rx_msg.data[0] / 255) * 100) + ((rx_msg.data[1] / 16) * 1000);
-            ESP_LOGI("CAN_0x35B", "[%2x, %2x, %2x, %2x, %2x, %2x, %2x, %2x]", 
-                rx_msg.data[7], rx_msg.data[6], rx_msg.data[5], rx_msg.data[4], 
-                rx_msg.data[3], rx_msg.data[2], rx_msg.data[1], rx_msg.data[0]);
-            write_to_fuel_gauge(rx_msg.data[0]);
-            write_to_temp_gauge(rx_msg.data[2]);
-        }
-        
-        if (rx_msg.identifier == ID_VEHICLE_SPEED) {
-            ESP_LOGI("CAN_0x29B", "[%2x, %2x, %2x, %2x, %2x, %2x, %2x, %2x]", 
-                rx_msg.data[7], rx_msg.data[6], rx_msg.data[5], rx_msg.data[4], 
-                rx_msg.data[3], rx_msg.data[2], rx_msg.data[1], rx_msg.data[0]);
-            ESP_LOGI(EXAMPLE_TAG, "Received slave ping response");
-        } 
-
-        vTaskDelay(pdMS_TO_TICKS(100));
-    }
-
 }
 
 void app_main(void)
