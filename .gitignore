@@ -1,4 +1,5 @@
 build
-code/.vscode/*
+code/.vscode/
 code/.vscode/c_cpp_properties.json
 code/.vscode/settings.json
+code/.vscode/c_cpp_properties.json
