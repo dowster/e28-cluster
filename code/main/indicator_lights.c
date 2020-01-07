@@ -31,13 +31,13 @@
 static gpio_num_t i2c_gpio_sda = 21;
 static gpio_num_t i2c_gpio_scl = 22;
 static uint32_t i2c_frequency = 100000;
-static i2c_port_t i2c_port = I2C_NUM_1;
+static i2c_port_t i2c_port = I2C_NUM_0;
 
 
 #define I2C_MASTER_TX_BUF_DISABLE 0 /*!< I2C master doesn't need buffer */
 #define I2C_MASTER_RX_BUF_DISABLE 0 /*!< I2C master doesn't need buffer */
 
-#define I2C_ACK_ENABLE true
+#define I2C_ACK_ENABLE 0x0
 
 uint16_t INDICATOR_OUTPUT_STATUS = 0x0000;
 
