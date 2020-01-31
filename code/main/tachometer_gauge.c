@@ -19,7 +19,7 @@ ledc_timer_config_t tachometer_timer_config = {
     .freq_hz = 1,                      // frequency of PWM signal
     .speed_mode = TACH_LS_MODE,           // timer mode
     .timer_num = TACH_LS_TIMER,            // timer index
-    .clk_cfg = LEDC_AUTO_CLK,              // Auto select the source clock
+ //   .clk_cfg = LEDC_AUTO_CLK,              // Auto select the source clock
 };
 
 ledc_channel_config_t tachometer_ledc_channel = {

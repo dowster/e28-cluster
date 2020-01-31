@@ -91,7 +91,7 @@ void app_main(void)
     ESP_LOGI("INIT", "Initializing i2c");
     indicators_init();
     
-    write_to_speedometer(3);
+    //write_to_speedometer(3);
 
     bool on_or_off = true;
     uint8_t count = 0;
@@ -106,19 +106,14 @@ void app_main(void)
         
         if(on_or_off)
         {
-            indicator_activate(count);
+            indicator_activate_all();
         }
         else
         {
-            indicator_deactivate(count);
+            indicator_deactivate_all();
         }
 
-        count++;
-        count = count % 13;
-
-        // Switch the direction
-        if(count == 0)
-            on_or_off = !on_or_off;
+        on_or_off = !on_or_off;
 
         write_to_speedometer(i);
         write_to_tachometer(i * 40);

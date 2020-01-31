@@ -31,13 +31,13 @@
 static gpio_num_t i2c_gpio_sda = 21;
 static gpio_num_t i2c_gpio_scl = 22;
 static uint32_t i2c_frequency = 100000;
-static i2c_port_t i2c_port = I2C_NUM_0;
+static i2c_port_t i2c_port = I2C_NUM_1;
 
 
 #define I2C_MASTER_TX_BUF_DISABLE 0 /*!< I2C master doesn't need buffer */
 #define I2C_MASTER_RX_BUF_DISABLE 0 /*!< I2C master doesn't need buffer */
 
-#define I2C_ACK_ENABLE 0x0
+#define I2C_ACK_ENABLE 0x1
 
 uint16_t INDICATOR_OUTPUT_STATUS = 0x0000;
 
@@ -45,14 +45,13 @@ static const char* TAG = "INDICATOR_LIGHTS";
 
 void indicators_init() {
 
-    i2c_config_t conf = {
-    .mode = I2C_MODE_MASTER,
-    .sda_io_num = i2c_gpio_sda,
-    .scl_io_num = i2c_gpio_scl,
-    .sda_pullup_en = GPIO_PULLUP_ENABLE,
-    .scl_pullup_en = GPIO_PULLUP_ENABLE,
-    .master.clk_speed = i2c_frequency
-};
+    i2c_config_t conf;
+    conf.mode = I2C_MODE_MASTER;
+    conf.sda_io_num = i2c_gpio_sda;
+    conf.scl_io_num = i2c_gpio_scl;
+    conf.sda_pullup_en = GPIO_PULLUP_ENABLE;
+    conf.scl_pullup_en = GPIO_PULLUP_ENABLE;
+    conf.master.clk_speed = i2c_frequency;
 
     ESP_LOGI("I2C", "Initializing i2c port");
     i2c_param_config(i2c_port, &conf);
@@ -67,7 +66,6 @@ void indicators_init() {
     i2c_master_write_byte(cmd, (EXPANDER_I2C_ADDRESS << 1) | EXPANDER_WRITE_BIT, I2C_ACK_ENABLE);
     i2c_master_write_byte(cmd, MCP23017_IODIRA, I2C_ACK_ENABLE);
     i2c_master_write_byte(cmd, 0x00, I2C_ACK_ENABLE); // Set IODIR of register A to output
-    i2c_master_stop(cmd);
     esp_err_t ret = i2c_master_cmd_begin(i2c_port, cmd, 1000 / portTICK_RATE_MS);
     i2c_cmd_link_delete(cmd);
 
@@ -85,7 +83,6 @@ void indicators_init() {
     i2c_master_write_byte(cmd, (EXPANDER_I2C_ADDRESS << 1) | EXPANDER_WRITE_BIT, I2C_ACK_ENABLE);
     i2c_master_write_byte(cmd, MCP23017_IODIRB, I2C_ACK_ENABLE);
     i2c_master_write_byte(cmd, 0x00, I2C_ACK_ENABLE); // Set IODIR of register B to output
-    i2c_master_stop(cmd);
     esp_err_t ret1 = i2c_master_cmd_begin(i2c_port, cmd, 1000 / portTICK_RATE_MS);
     i2c_cmd_link_delete(cmd);
 
@@ -110,7 +107,6 @@ void indicator_write_status() {
     // Write the least significant byte of the INDICATOR_OUTPUT_STATUS
     // to port A
     i2c_master_write_byte(cmd, (uint8_t) INDICATOR_OUTPUT_STATUS & 0xFF, I2C_ACK_ENABLE);
-    i2c_master_stop(cmd);
     esp_err_t ret = i2c_master_cmd_begin(i2c_port, cmd, 1000 / portTICK_RATE_MS);
     i2c_cmd_link_delete(cmd);
 
@@ -131,9 +127,6 @@ void indicator_write_status() {
     // to port B
     ESP_LOGI("I2C", "GPIOB VAL = %d", (INDICATOR_OUTPUT_STATUS >> 7) & 0xFF);
     i2c_master_write_byte(cmd, (uint8_t) (INDICATOR_OUTPUT_STATUS >> 7) & 0xFF, I2C_ACK_ENABLE);
-
-    i2c_master_stop(cmd);
-
     esp_err_t ret1 = i2c_master_cmd_begin(i2c_port, cmd, 1000 / portTICK_RATE_MS);
     i2c_cmd_link_delete(cmd);
 
@@ -159,11 +152,21 @@ void indicator_activate(uint8_t pin) {
     indicator_write_status();
 }
 
+void indicator_activate_all() {
+    INDICATOR_OUTPUT_STATUS = 0xFFFF;
+    indicator_write_status();
+}
+
 void indicator_deactivate(uint8_t pin) {
     if(pin > 15) 
         return;
 
     INDICATOR_OUTPUT_STATUS &= ~( 1 << pin );
+    indicator_write_status();
+}
+
+void indicator_deactivate_all() {
+    INDICATOR_OUTPUT_STATUS = 0x0000;
     indicator_write_status();
 }
 
