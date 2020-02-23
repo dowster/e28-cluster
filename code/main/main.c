@@ -17,6 +17,8 @@
 #include <esp_spi_flash.h>
 #include <esp_err.h>
 #include <esp_log.h>
+#include <driver/gpio.h>
+#include <string.h>
 #include <driver/can.h>
 
 #include "fuel_gauge.c"
@@ -24,7 +26,9 @@
 #include "speedometer_gauge.c"
 #include "tachometer_gauge.c"
 #include "simpbms_comms.c"
-#include "indicator_lights.c"
+//#include "indicator_lights.c"
+
+#include <mcp23x17.h>
 
 /* --------------------- Definitions and static variables ------------------ */
 //Example Configuration
@@ -38,6 +42,10 @@
 #define ID_VEHICLE_SPEED                0x29B
 
 #define GPIO_OUTPUT_IO_0                18
+
+#define I2C_FREQ_HZ 100000
+#define SDA_GPIO 21
+#define SCL_GPIO 22
 
 static const can_filter_config_t can_filter_config = CAN_FILTER_CONFIG_ACCEPT_ALL();
 static const can_timing_config_t can_timing_config = CAN_TIMING_CONFIG_500KBITS();
@@ -60,6 +68,34 @@ static void can_configure() {
 static void output_configure() {
     setup_temp_gauge(DAC_CHANNEL_1);
     setup_fuel_gauge(DAC_CHANNEL_2, -1);
+}
+
+void test(void *pvParameters)
+{
+    mcp23x17_t dev;
+    memset(&dev, 0, sizeof(mcp23x17_t));
+
+    dev.cfg.scl_pullup_en = GPIO_PULLUP_DISABLE;
+    dev.cfg.sda_pullup_en = GPIO_PULLUP_DISABLE;
+
+    ESP_ERROR_CHECK(mcp23x17_init_desc(&dev, 0, MCP23X17_ADDR_BASE, SDA_GPIO, SCL_GPIO));
+
+    //// Setup PORTB7 as output
+    mcp23x17_set_mode(&dev, 7, MCP23X17_GPIO_OUTPUT);
+    mcp23x17_set_mode(&dev, 7, MCP23X17_GPIO_OUTPUT);
+    mcp23x17_set_mode(&dev, 7, MCP23X17_GPIO_OUTPUT);
+    mcp23x17_set_mode(&dev, 7, MCP23X17_GPIO_OUTPUT);
+    // do some blinkning
+    //indicators_init();
+    bool on = true;
+    while (1)
+    {
+        // if(on) indicator_activate(7);
+        // else indicator_deactivate(7);
+        mcp23x17_set_level(&dev, 7, on);
+        on = !on;
+        vTaskDelay(500 / portTICK_PERIOD_MS);
+    }
 }
 
 void app_main(void)
@@ -89,7 +125,10 @@ void app_main(void)
     //xTaskCreate(can_receive_task, "CAN_rx", 4096, NULL, RX_TASK_PRIO, NULL);
 
     ESP_LOGI("INIT", "Initializing i2c");
-    indicators_init();
+    //indicators_init();
+    
+    ESP_ERROR_CHECK(i2cdev_init());
+    xTaskCreate(test, "test", configMINIMAL_STACK_SIZE * 6, NULL, 5, NULL);
     
     //write_to_speedometer(3);
 
@@ -104,16 +143,16 @@ void app_main(void)
         write_to_fuel_gauge(i / 1.2);
         write_to_temp_gauge(i + 100);
         
-        if(on_or_off)
-        {
-            indicator_activate_all();
-        }
-        else
-        {
-            indicator_deactivate_all();
-        }
-
-        on_or_off = !on_or_off;
+        //if(on_or_off)
+        //{
+        //    indicator_activate_all();
+        //}
+        //else
+        //{
+        //    indicator_deactivate_all();
+        //}
+//
+        //on_or_off = !on_or_off;
 
         write_to_speedometer(i);
         write_to_tachometer(i * 40);
