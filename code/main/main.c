@@ -26,9 +26,7 @@
 #include "speedometer_gauge.c"
 #include "tachometer_gauge.c"
 #include "simpbms_comms.c"
-//#include "indicator_lights.c"
-
-#include <mcp23x17.h>
+#include "indicator_lights.c"
 
 /* --------------------- Definitions and static variables ------------------ */
 //Example Configuration
@@ -72,29 +70,28 @@ static void output_configure() {
 
 void test(void *pvParameters)
 {
-    mcp23x17_t dev;
-    memset(&dev, 0, sizeof(mcp23x17_t));
+    while(true) {
+        for( uint8_t loops = 10; loops > 0; loops--) {
+            indicator_activate_all();
+            vTaskDelay(500 / portTICK_PERIOD_MS);
+            indicator_deactivate_all();
+            vTaskDelay(500 / portTICK_PERIOD_MS);
+        }
+        uint8_t pin = 0;
 
-    dev.cfg.scl_pullup_en = GPIO_PULLUP_DISABLE;
-    dev.cfg.sda_pullup_en = GPIO_PULLUP_DISABLE;
+        for(; pin <= INDICATOR_CHECK; pin++){
+            if(pin > 0)
+                indicator_deactivate(pin - 1);
+            indicator_activate(pin);
+            vTaskDelay(500 / portTICK_PERIOD_MS);
+        }
 
-    ESP_ERROR_CHECK(mcp23x17_init_desc(&dev, 0, MCP23X17_ADDR_BASE, SDA_GPIO, SCL_GPIO));
-
-    //// Setup PORTB7 as output
-    mcp23x17_set_mode(&dev, 7, MCP23X17_GPIO_OUTPUT);
-    mcp23x17_set_mode(&dev, 7, MCP23X17_GPIO_OUTPUT);
-    mcp23x17_set_mode(&dev, 7, MCP23X17_GPIO_OUTPUT);
-    mcp23x17_set_mode(&dev, 7, MCP23X17_GPIO_OUTPUT);
-    // do some blinkning
-    //indicators_init();
-    bool on = true;
-    while (1)
-    {
-        // if(on) indicator_activate(7);
-        // else indicator_deactivate(7);
-        mcp23x17_set_level(&dev, 7, on);
-        on = !on;
-        vTaskDelay(500 / portTICK_PERIOD_MS);
+        for(pin--; pin >= 0; pin--){
+            indicator_deactivate(pin + 1);
+            indicator_activate(pin);
+            vTaskDelay(500 / portTICK_PERIOD_MS);
+        }
+        indicator_deactivate(INDICATOR_CHECK);
     }
 }
 
@@ -124,17 +121,10 @@ void app_main(void)
     ESP_LOGI("INIT", "Initializing canbus");
     //xTaskCreate(can_receive_task, "CAN_rx", 4096, NULL, RX_TASK_PRIO, NULL);
 
-    ESP_LOGI("INIT", "Initializing i2c");
-    //indicators_init();
-    
-    ESP_ERROR_CHECK(i2cdev_init());
-    xTaskCreate(test, "test", configMINIMAL_STACK_SIZE * 6, NULL, 5, NULL);
+    indicators_init();
+    xTaskCreate(test, "Indicator Lamp Update", configMINIMAL_STACK_SIZE * 6, NULL, 5, NULL);
     
     //write_to_speedometer(3);
-
-    bool on_or_off = true;
-    uint8_t count = 0;
-
 
     for (uint32_t i = 120; i >= 1; i--) {
         printf("Restarting in %d seconds...\n", i);
@@ -142,17 +132,6 @@ void app_main(void)
         
         write_to_fuel_gauge(i / 1.2);
         write_to_temp_gauge(i + 100);
-        
-        //if(on_or_off)
-        //{
-        //    indicator_activate_all();
-        //}
-        //else
-        //{
-        //    indicator_deactivate_all();
-        //}
-//
-        //on_or_off = !on_or_off;
 
         write_to_speedometer(i);
         write_to_tachometer(i * 40);
