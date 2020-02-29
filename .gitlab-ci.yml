@@ -10,7 +10,7 @@ build:
   script:
     - cd code
     - idf.py build
-    - tar -zcf e28-cluster-${CI_COMMIT_REF_SLUG}-${CI_CONCURRENT_PROJECT_ID}.tar.gz code/build
+    - tar -zcf ../e28-cluster-${CI_COMMIT_REF_SLUG}-${CI_CONCURRENT_PROJECT_ID}.tar.gz build
   artifacts:
     paths:
       - e28-cluster-*.tar.gz
