@@ -1,20 +1,10 @@
-#pragma once
-
 /**
  * Communication file for the simpbms CAN messages. 
  * Will start reading from those messages and then include
  * data from the Volt/Ampera packs if I need more.
  */
 
-#include <freertos/FreeRTOS.h>
-#include <freertos/task.h>
-#include <esp_log.h>
-#include <driver/can.h>
-
-#define SIMPBMS_MSG_ID_LIMITS          0x351
-#define SIMPBMS_MSG_ID_SOC             0x355
-#define SIMPBMS_MSG_ID_STATUS          0x356
-#define SIMPBMS_MSG_ID_ALARMS_WARNINGS 0x35A
+#include "include/simpbms_comms.h"
 
 /**
  * Discharge current limit in .1 A
@@ -106,31 +96,4 @@ void simpbms_process_warnings(can_message_t *message) {
     simpbms_warning_undervoltage = message->data[4] & 0x10;
     simpbms_warning_overtemp     = message->data[4] & 0x40;
     simpbms_warning_undertemp    = message->data[5] & 0x01;
-}
-
-void can_receive_task(void *arg) {
-
-    while(true) {
-        can_message_t rx_msg;
-        can_receive(&rx_msg, portMAX_DELAY);
-        ESP_LOGI("CAN_MSG", "ID: %2x", rx_msg.identifier);
-        switch(rx_msg.identifier) {
-            case SIMPBMS_MSG_ID_LIMITS:
-                simpbms_process_limits(&rx_msg);
-                break;
-            case SIMPBMS_MSG_ID_SOC:
-                simpbms_process_soc(&rx_msg);
-                break;
-            case SIMPBMS_MSG_ID_STATUS:
-                simpbms_process_status(&rx_msg);
-                break;
-            case SIMPBMS_MSG_ID_ALARMS_WARNINGS:
-                simpbms_process_warnings(&rx_msg);
-                break;
-            default:
-                break;
-        }
-
-        vTaskDelay(pdMS_TO_TICKS(100));
-    }
 }
