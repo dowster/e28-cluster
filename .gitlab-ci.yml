@@ -1,0 +1,16 @@
+# Currently using IDF v4.0 supplied from Espressif. 
+image: espressif/idf:release-v4.0
+
+build:
+  stage: build
+  script:
+    - cd code
+    - idf.py build
+    - tar -zcf e28-cluster-${CI_COMMIT_REF_SLUG}-${CI_CONCURRENT_PROJECT_ID}.tar.gz code/build
+  artifacts:
+    paths:
+      - e28-cluster-*.tar.gz
+      - code/build/partition_table/partition-table.bin
+      - code/build/bootloader/bootloader.bin
+      - code/build/e28-cluster.bin
+
