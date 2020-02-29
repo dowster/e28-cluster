@@ -1,6 +1,10 @@
 # Currently using IDF v4.0 supplied from Espressif. 
 image: espressif/idf:release-v4.0
 
+# Since I have at least one submodule in this project I want to make sure it's cloned. 
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
 build:
   stage: build
   script:
