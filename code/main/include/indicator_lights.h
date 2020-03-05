@@ -1,12 +1,16 @@
-#ifndef E28_CLUSTER_INDICATOR_LIGHTS
-#define E28_CLUSTER_INDICATOR_LIGHTS
-
 #include <esp_system.h>
 #include <esp_err.h>
 #include <esp_log.h>
 
 #include <freertos/FreeRTOS.h>
 #include <string.h> // Included for memset
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#ifndef E28_CLUSTER_INDICATOR_LIGHTS
+#define E28_CLUSTER_INDICATOR_LIGHTS
 
 #include <mcp23x17.h>
 #include "config.h"
@@ -61,4 +65,8 @@ void indicator_deactivate(uint8_t pin);
  */
 void indicator_deactivate_all();
 
+#endif
+
+#ifdef __cplusplus
+}
 #endif

@@ -6,7 +6,10 @@
    software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
    CONDITIONS OF ANY KIND, either express or implied.
 */
+
 #include <stdio.h>
+#include <string.h>
+
 #include <driver/gpio.h>
 #include <driver/dac.h>
 #include <freertos/FreeRTOS.h>
@@ -17,22 +20,26 @@
 #include <esp_spi_flash.h>
 #include <esp_err.h>
 #include <esp_log.h>
-#include <driver/gpio.h>
-#include <string.h>
 
 #include "include/fuel_gauge.h"
-#include "include/temp_gauge.h"
 #include "include/speedometer_gauge.h"
 #include "include/tachometer_gauge.h"
 #include "include/simpbms_comms.h"
 #include "include/indicator_lights.h"
 #include "include/canbus.h"
 
+#include "include/temp_gauge.h"
+
 #define ID_ENGINE_SPEED_TEMP      0x35B
 #define ID_VEHICLE_SPEED          0x29B
 #define INDICATOR_LIGHTS_EXPANDER 0x20
 #define GPIO_OUTPUT_IO_0          18
 
+extern "C" {
+    void app_main(void);
+}
+
+TempGauge tempGauge;
 
 void app_main(void)
 {
@@ -51,8 +58,8 @@ void app_main(void)
     printf("%dMB %s flash\n", spi_flash_get_chip_size() / (1024 * 1024),
             (chip_info.features & CHIP_FEATURE_EMB_FLASH) ? "embedded" : "external");
 
-    setup_temp_gauge(DAC_CHANNEL_1);
-    setup_fuel_gauge(DAC_CHANNEL_2, -1);
+    tempGauge = TempGauge(DAC_CHANNEL_1);
+    setup_fuel_gauge(DAC_CHANNEL_2, GPIO_NUM_NC);
 
     setup_speedometer_gauge(GPIO_NUM_4);
     setup_tachometer_gauge(GPIO_NUM_5);
@@ -71,7 +78,7 @@ void app_main(void)
         vTaskDelay(1000 / portTICK_PERIOD_MS);
         
         write_to_fuel_gauge(i / 1.2);
-        write_to_temp_gauge(i + 100);
+        tempGauge.write_to_temp_gauge(i + 100);
 
         write_to_speedometer(i);
         write_to_tachometer(i * 40);

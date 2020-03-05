@@ -1,5 +1,3 @@
-#ifndef E28_CLUSTER_CANBUS_MODULE
-#define E28_CLUSTER_CANBUS_MODULE
 
 #include <esp_system.h>
 #include <esp_err.h>
@@ -11,6 +9,14 @@
 #include <driver/can.h>
 
 #include "config.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#ifndef E28_CLUSTER_CANBUS_MODULE
+#define E28_CLUSTER_CANBUS_MODULE
+
 
 /** Check for required defines **/
 #ifndef CAN_RX_TASK_PRIO
@@ -72,4 +78,8 @@ void can_configure();
  */
 void can_receive_task(void *arg);
 
+#endif
+
+#ifdef __cplusplus
+}
 #endif

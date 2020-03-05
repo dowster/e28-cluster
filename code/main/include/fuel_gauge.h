@@ -1,11 +1,15 @@
-#ifndef E28_CLUSTER_FUEL_GAUGE
-#define E28_CLUSTER_FUEL_GAUGE
-
 #include "esp_err.h"
 #include "esp_log.h"
 
 #include <driver/gpio.h>
 #include <driver/dac.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#ifndef E28_CLUSTER_FUEL_GAUGE
+#define E28_CLUSTER_FUEL_GAUGE
 
 /**
  * Setup the temperature gauge output. 
@@ -32,6 +36,8 @@ void enable_low_fuel_indicator();
  */
 void disable_low_fuel_indicator();
 
+#endif
 
-
+#ifdef __cplusplus
+}
 #endif
