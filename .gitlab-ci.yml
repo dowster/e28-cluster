@@ -21,10 +21,10 @@ build-code:
 
 build-schematics:
   stage: build
-  image: akshmakov/eeshow:v5
+  image: registry.gitlab.com/dowster/eeshow:test-01
   script:
     - cd pcb-design
-    - eeplot -o ../pcb-design-${CI_COMMIT_REF_SLUG}-${CI_PIPELINE_ID}.pdf -e schematic-cache.lib schematic.pro
+    - eeplot -o ../pcb-design-${CI_COMMIT_REF_SLUG}-${CI_PIPELINE_ID}.pdf schematic.pro
   artifacts:
     paths:
       - pcb-design-${CI_COMMIT_REF_SLUG}-${CI_PIPELINE_ID}.pdf
