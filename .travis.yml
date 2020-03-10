@@ -13,7 +13,13 @@ before_deploy:
 deploy: 
   provider: releases
   token: ${GH_TOKEN}
-  file: e28-cluster-${TRAVIS_TAG}-${TRAVIS_BUILD_NUMBER}.tar.gz
+  file: 
+    - e28-cluster-${TRAVIS_TAG}-${TRAVIS_BUILD_NUMBER}.tar.gz
+    - code/build/partition_table/partition-table.bin
+    - code/build/bootloader/bootloader.bin
+    - code/build/e28-cluster.bin
+    - pcb-design/pcb-design-${TRAVIS_TAG}-${TRAVIS_BUILD_NUMBER}.pdf
+
   skip_cleanup: true
   on:
     tags: true
