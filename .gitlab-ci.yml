@@ -4,20 +4,20 @@
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
 
-#build-code:
-#  # Currently using IDF v4.0 supplied from Espressif. 
-#  image: espressif/idf:release-v4.0
-#  stage: build
-#  script:
-#    - cd code
-#    - idf.py build
-#    - tar -zcf ../e28-cluster-${CI_COMMIT_REF_SLUG}-${CI_PIPELINE_ID}.tar.gz build
-#  artifacts:
-#    paths:
-#      - e28-cluster-*.tar.gz
-#      - code/build/partition_table/partition-table.bin
-#      - code/build/bootloader/bootloader.bin
-#      - code/build/e28-cluster.bin
+build-code:
+  # Currently using IDF v4.0 supplied from Espressif. 
+  image: espressif/idf:release-v4.0
+  stage: build
+  script:
+    - cd code
+    - idf.py build
+    - tar -zcf ../e28-cluster-${CI_COMMIT_REF_SLUG}-${CI_PIPELINE_ID}.tar.gz build
+  artifacts:
+    paths:
+      - e28-cluster-*.tar.gz
+      - code/build/partition_table/partition-table.bin
+      - code/build/bootloader/bootloader.bin
+      - code/build/e28-cluster.bin
 
 build-schematics:
   stage: build
