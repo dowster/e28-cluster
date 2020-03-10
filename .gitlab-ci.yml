@@ -24,7 +24,7 @@ build-schematics:
   image: akshmakov/eeshow:v5
   script:
     - cd pcb-design
-    - eeplot -o ../pcb-design-${CI_COMMIT_REF_SLUG}-${CI_CONCURRENT_PROJECT_ID}.pdf schematic.pro
+    - eeplot -o ../pcb-design-${CI_COMMIT_REF_SLUG}-${CI_CONCURRENT_PROJECT_ID}.pdf schematic-cache.lib schematic.pro
   artifacts:
     paths:
       - pcb-design-${CI_COMMIT_REF_SLUG}-${CI_CONCURRENT_PROJECT_ID}.pdf
