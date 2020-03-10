@@ -5,7 +5,7 @@ services:
   - docker
 
 script:
- # - docker run --rm -v $PWD/code:/project -w /project espressif/idf:release-v4.0 idf.py build
+  - docker run --rm -v $PWD/code:/project -w /project espressif/idf:release-v4.0 idf.py build
   - docker run --rm -v $PWD/pcb-design:/project -w /project registry.gitlab.com/dowster/eeshow:latest eeplot -o pcb-design-${TRAVIS_TAG}-${TRAVIS_BUILD_NUMBER}.pdf schematic.pro
 before_deploy:
  - |
