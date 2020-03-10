@@ -1,11 +1,12 @@
-# Currently using IDF v4.0 supplied from Espressif. 
-image: espressif/idf:release-v4.0
+
 
 # Since I have at least one submodule in this project I want to make sure it's cloned. 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
 
-build:
+build-code:
+  # Currently using IDF v4.0 supplied from Espressif. 
+  image: espressif/idf:release-v4.0
   stage: build
   script:
     - cd code
@@ -18,3 +19,12 @@ build:
       - code/build/bootloader/bootloader.bin
       - code/build/e28-cluster.bin
 
+build-schematics:
+  stage: build
+  image: akshmakov/eeshow
+  script:
+    - cd pcb-design
+    - eeplot -o ../pcb-design-${CI_COMMIT_REF_SLUG}-${CI_CONCURRENT_PROJECT_ID}.pdf pcb-design.pro schematic.pro schematic.schematic
+  artifacts:
+    paths:
+      - pcb-design-${CI_COMMIT_REF_SLUG}-${CI_CONCURRENT_PROJECT_ID}.pdf
