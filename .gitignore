@@ -4,3 +4,5 @@ code/.vscode/c_cpp_properties.json
 code/.vscode/settings.json
 code/.vscode/c_cpp_properties.json
 code/.vscode/settings.json
+workspace.code-workspace
+pcb-design/*.sch-bak
