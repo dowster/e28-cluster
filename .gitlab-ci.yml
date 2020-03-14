@@ -8,6 +8,9 @@ build-code:
   # Currently using IDF v4.0 supplied from Espressif. 
   image: espressif/idf:release-v4.0
   stage: build
+  cache:
+    paths:
+      - code/build
   script:
     - cd code
     - idf.py build
