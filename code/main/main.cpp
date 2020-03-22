@@ -77,8 +77,8 @@ void app_main(void)
         printf("Restarting in %d seconds...\n", i);
         vTaskDelay(1000 / portTICK_PERIOD_MS);
         
-        write_to_fuel_gauge(i / 1.2);
-        tempGauge.write_to_temp_gauge(i + 100);
+        write_to_fuel_gauge(i / 2);
+        tempGauge.write_to_temp_gauge(i + 50);
 
         write_to_speedometer(i);
         write_to_tachometer(i * 40);

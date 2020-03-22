@@ -74,7 +74,7 @@ void indicator_activate(uint8_t pin) {
  * Turn on all indicator lights.
  */
 void indicator_activate_all() {
-    mcp23x17_port_write(&indicator_lights_expander, 0xFF);
+    mcp23x17_port_write(&indicator_lights_expander, 0xFFFF);
 }
 
 /**
