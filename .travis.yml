@@ -1,6 +1,10 @@
 language: cpp
 os: linux
 
+cache:
+  directories:
+    - code/build
+
 services:
   - docker
 
