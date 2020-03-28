@@ -7,6 +7,7 @@ set(COMPONENT_SRCS
     "speedometer_gauge.c"
     "tachometer_gauge.c"
     "temp_gauge.cpp"
+    "wifi_controls.cpp"
 )
 set(COMPONENT_ADD_INCLUDEDIRS
     "include"

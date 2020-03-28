@@ -29,6 +29,7 @@
 #include "include/canbus.h"
 
 #include "include/temp_gauge.h"
+#include "include/wifi_controls.h"
 
 #define ID_ENGINE_SPEED_TEMP      0x35B
 #define ID_VEHICLE_SPEED          0x29B
@@ -40,6 +41,7 @@ extern "C" {
 }
 
 TempGauge tempGauge;
+WifiControls wifiControls;
 
 void app_main(void)
 {
@@ -57,6 +59,16 @@ void app_main(void)
 
     printf("%dMB %s flash\n", spi_flash_get_chip_size() / (1024 * 1024),
             (chip_info.features & CHIP_FEATURE_EMB_FLASH) ? "embedded" : "external");
+
+    //Initialize NVS
+    esp_err_t ret = nvs_flash_init();
+    if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
+      ESP_ERROR_CHECK(nvs_flash_erase());
+      ret = nvs_flash_init();
+    }
+    ESP_ERROR_CHECK(ret);
+
+    wifiControls = WifiControls();
 
     tempGauge = TempGauge(DAC_CHANNEL_1);
     setup_fuel_gauge(DAC_CHANNEL_2, GPIO_NUM_NC);
