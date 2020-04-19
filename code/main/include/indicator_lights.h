@@ -35,6 +35,13 @@ extern "C" {
 
 #endif
 
+struct indicator_light {
+    int mcp23017_pin;
+    char name[25];
+};
+
+extern struct indicator_light e30_indicators[];
+
 /**
  *
  */
@@ -49,6 +56,11 @@ void indicator_lights(void *pvParameters);
  *
  */
 void indicator_activate(uint8_t pin);
+
+/**
+ *
+ */
+bool indicator_get_state(uint8_t pin);
 
 /**
  *

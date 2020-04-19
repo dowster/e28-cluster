@@ -69,9 +69,14 @@ void app_main(void)
     ESP_ERROR_CHECK(ret);
 
     wifiControls = WifiControls();
+    ESP_LOGI("INIT", "CONNECTING TO WIFI NETWORK");
+    wifiControls.connectToStation();
+    ESP_LOGI("INIT", "STARTING WEBSERVER");
+    wifiControls.setupServer();
 
-    tempGauge = TempGauge(DAC_CHANNEL_1);
-    setup_fuel_gauge(DAC_CHANNEL_2, GPIO_NUM_NC);
+    tempGauge = TempGauge(DAC_CHANNEL_2);
+    setup_fuel_gauge(DAC_CHANNEL_1, GPIO_NUM_NC);
+    wifiControls.setTempGauge(&tempGauge);
 
     setup_speedometer_gauge(GPIO_NUM_4);
     setup_tachometer_gauge(GPIO_NUM_5);
@@ -90,7 +95,7 @@ void app_main(void)
         vTaskDelay(1000 / portTICK_PERIOD_MS);
         
         write_to_fuel_gauge(i / 1.2);
-        tempGauge.write_to_temp_gauge(i + 100);
+        //tempGauge.write_to_temp_gauge(i + 100);
 
         write_to_speedometer(i);
         write_to_tachometer(i * 40);
