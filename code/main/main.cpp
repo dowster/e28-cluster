@@ -7,6 +7,13 @@
    CONDITIONS OF ANY KIND, either express or implied.
 */
 
+// This is to fix a typo in the current 4.2 release of esp-idf.
+// Remove this once PR https://github.com/espressif/esp-idf/pull/5148 is merged. 
+#ifdef __cplusplus
+#define _cplusplus
+#endif
+
+
 #include <stdio.h>
 #include <string.h>
 
