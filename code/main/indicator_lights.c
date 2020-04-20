@@ -143,7 +143,7 @@ void indicator_activate_all() {
         return;
     }
 
-    mcp23x17_port_write(&indicator_lights_expander, 0xFF);
+    mcp23x17_port_write(&indicator_lights_expander, 0xFFFF);
 }
 
 /**
