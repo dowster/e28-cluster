@@ -16,6 +16,7 @@
 
 #include "lwip/err.h"
 #include "lwip/sys.h"
+#include "mdns.h"
 
 #include "cJSON.h"
 

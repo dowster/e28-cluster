@@ -49,6 +49,20 @@ static void event_handler(void* arg, esp_event_base_t event_base,
         ESP_LOGI(TAG, "got ip:" IPSTR, IP2STR(&event->ip_info.ip));
         s_retry_num = 0;
         xEventGroupSetBits(s_wifi_event_group, WIFI_CONNECTED_BIT);
+
+        //initialize mDNS service
+        esp_err_t err = mdns_init();
+        if (err) {
+            printf("MDNS Init failed: %d\n", err);
+            return;
+        }
+
+        //set hostname
+        mdns_hostname_set("e28-cluster");
+        //set default instance
+        mdns_instance_name_set("Dowster's e28/e30 Cluster Driver");
+
+        mdns_service_add(NULL, "_http", "_tcp", 80, NULL, 0);
     }
 }
 }
