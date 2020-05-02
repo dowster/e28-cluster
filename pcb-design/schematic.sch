@@ -390,49 +390,29 @@ $EndComp
 Wire Wire Line
 	8500 1450 8650 1450
 $Sheet
-S 1300 4500 1400 1800
+S 5450 5850 1400 1800
 U 5E6C532A
 F0 "Indicator_Lights" 50
 F1 "Indicator_Lights.sch" 50
-F2 "SDA" I L 1300 4600 50 
-F3 "SCK" I L 1300 4700 50 
-F4 "B4_SinkOutput" I R 2700 5000 50 
-F5 "B0_SinkOutput" I R 2700 4600 50 
-F6 "B1_SinkOutput" I R 2700 4700 50 
-F7 "B2_SinkOutput" I R 2700 4800 50 
-F8 "B3_SinkOutput" I R 2700 4900 50 
-F9 "B5_SinkOutput" I R 2700 5100 50 
-F10 "B6_SinkOutput" I R 2700 5200 50 
-F11 "B7_SinkOutput" I R 2700 5300 50 
-F12 "A0_SourceOutput" I R 2700 5450 50 
-F13 "A1_SourceOutput" I R 2700 5550 50 
-F14 "A2_SourceOutput" I R 2700 5650 50 
-F15 "A3_SourceOutput" I R 2700 5750 50 
-F16 "A4_SourceOutput" I R 2700 5850 50 
-F17 "A5_SourceOutput" I R 2700 5950 50 
-F18 "A6_SourceOutput" I R 2700 6050 50 
-F19 "A7_SourceOutput" I R 2700 6150 50 
+F2 "SDA" I L 5450 5950 50 
+F3 "SCK" I L 5450 6050 50 
+F4 "B4_SinkOutput" I R 6850 6350 50 
+F5 "B0_SinkOutput" I R 6850 5950 50 
+F6 "B1_SinkOutput" I R 6850 6050 50 
+F7 "B2_SinkOutput" I R 6850 6150 50 
+F8 "B3_SinkOutput" I R 6850 6250 50 
+F9 "B5_SinkOutput" I R 6850 6450 50 
+F10 "B6_SinkOutput" I R 6850 6550 50 
+F11 "B7_SinkOutput" I R 6850 6650 50 
+F12 "A0_SourceOutput" I R 6850 6800 50 
+F13 "A1_SourceOutput" I R 6850 6900 50 
+F14 "A2_SourceOutput" I R 6850 7000 50 
+F15 "A3_SourceOutput" I R 6850 7100 50 
+F16 "A4_SourceOutput" I R 6850 7200 50 
+F17 "A5_SourceOutput" I R 6850 7300 50 
+F18 "A6_SourceOutput" I R 6850 7400 50 
+F19 "A7_SourceOutput" I R 6850 7500 50 
 $EndSheet
-Wire Wire Line
-	1300 4600 1150 4600
-Wire Wire Line
-	1150 4600 1150 4300
-Wire Wire Line
-	1150 4300 3400 4300
-Wire Wire Line
-	3400 4300 3400 2750
-Wire Wire Line
-	3400 2750 3100 2750
-Wire Wire Line
-	3100 2850 3300 2850
-Wire Wire Line
-	3300 2850 3300 4200
-Wire Wire Line
-	3300 4200 1050 4200
-Wire Wire Line
-	1050 4200 1050 4700
-Wire Wire Line
-	1050 4700 1300 4700
 Wire Wire Line
 	3100 1950 3600 1950
 Text GLabel 3600 1950 2    50   Input ~ 0
@@ -562,4 +542,12 @@ Wire Notes Line
 	10850 550  10850 1950
 Wire Notes Line
 	7750 550  7750 1950
+Text GLabel 3100 2750 2    50   Input ~ 0
+I2C0_SDA
+Text GLabel 3100 2850 2    50   Input ~ 0
+I2C0_SCK
+Text GLabel 5450 5950 0    50   Input ~ 0
+I2C0_SDA
+Text GLabel 5450 6050 0    50   Input ~ 0
+I2C0_SCK
 $EndSCHEMATC
