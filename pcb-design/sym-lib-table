@@ -1,3 +1,4 @@
 (sym_lib_table
   (lib (name schematic-rescue)(type Legacy)(uri ${KIPRJMOD}/schematic-rescue.lib)(options "")(descr ""))
+  (lib (name ESP32-DEVKITC-32D)(type Legacy)(uri ${KIPRJMOD}/ESP32-DEVKITC-32D.lib)(options "")(descr ""))
 )
