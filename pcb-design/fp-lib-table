@@ -1,0 +1,3 @@
+(fp_lib_table
+  (lib (name pcb-design)(type KiCad)(uri C:/Users/dowster/source/repos/e28-cluster/pcb-design)(options "")(descr ""))
+)
