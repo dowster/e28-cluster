@@ -532,37 +532,37 @@ Text GLabel 7500 4750 2    50   Input ~ 0
 A6_SourceOutput
 Text GLabel 7500 4850 2    50   Input ~ 0
 A7_SourceOutput
-Text GLabel 9050 4200 0    50   Input ~ 0
-A0_SourceOutput
-Text GLabel 9050 4300 0    50   Input ~ 0
-A1_SourceOutput
-Text GLabel 9050 4400 0    50   Input ~ 0
-A2_SourceOutput
-Text GLabel 9050 4500 0    50   Input ~ 0
-A3_SourceOutput
-Text GLabel 9050 4600 0    50   Input ~ 0
-A4_SourceOutput
-Text GLabel 9050 4700 0    50   Input ~ 0
-A5_SourceOutput
-Text GLabel 9050 4800 0    50   Input ~ 0
-A6_SourceOutput
-Text GLabel 9050 4900 0    50   Input ~ 0
-A7_SourceOutput
-Text GLabel 9550 4200 2    50   Input ~ 0
-B0_SinkOutput
-Text GLabel 9550 4300 2    50   Input ~ 0
-B1_SinkOutput
-Text GLabel 9550 4400 2    50   Input ~ 0
-B2_SinkOutput
-Text GLabel 9550 4500 2    50   Input ~ 0
-B3_SinkOutput
-Text GLabel 9550 4600 2    50   Input ~ 0
-B4_SinkOutput
-Text GLabel 9550 4700 2    50   Input ~ 0
-B5_SinkOutput
-Text GLabel 9550 4800 2    50   Input ~ 0
-B6_SinkOutput
 Text GLabel 9550 4900 2    50   Input ~ 0
+A0_SourceOutput
+Text GLabel 9550 4800 2    50   Input ~ 0
+A1_SourceOutput
+Text GLabel 9550 4700 2    50   Input ~ 0
+A2_SourceOutput
+Text GLabel 9550 4600 2    50   Input ~ 0
+A3_SourceOutput
+Text GLabel 9550 4500 2    50   Input ~ 0
+A4_SourceOutput
+Text GLabel 9550 4400 2    50   Input ~ 0
+A5_SourceOutput
+Text GLabel 9550 4300 2    50   Input ~ 0
+A6_SourceOutput
+Text GLabel 9550 4200 2    50   Input ~ 0
+A7_SourceOutput
+Text GLabel 9050 4200 0    50   Input ~ 0
+B0_SinkOutput
+Text GLabel 9050 4300 0    50   Input ~ 0
+B1_SinkOutput
+Text GLabel 9050 4400 0    50   Input ~ 0
+B2_SinkOutput
+Text GLabel 9050 4500 0    50   Input ~ 0
+B3_SinkOutput
+Text GLabel 9050 4600 0    50   Input ~ 0
+B4_SinkOutput
+Text GLabel 9050 4700 0    50   Input ~ 0
+B5_SinkOutput
+Text GLabel 9050 4800 0    50   Input ~ 0
+B6_SinkOutput
+Text GLabel 9050 4900 0    50   Input ~ 0
 B7_SinkOutput
 Wire Notes Line
 	8350 2000 10400 2000
@@ -613,13 +613,13 @@ F 3 "~" H 9250 4800 50  0001 C CNN
 	1    9250 4800
 	1    0    0    -1  
 $EndComp
-Text GLabel 9550 5000 2    50   Input ~ 0
-TempGauge
 Text GLabel 9550 5300 2    50   Input ~ 0
-FuelGauge
+TempGauge
 Text GLabel 9550 5100 2    50   Input ~ 0
-Speedometer
+FuelGauge
 Text GLabel 9550 5200 2    50   Input ~ 0
+Speedometer
+Text GLabel 9550 5000 2    50   Input ~ 0
 Tachometer
 $Comp
 L power:GND #PWR0125
@@ -689,4 +689,58 @@ F 3 "" H 9050 5000 50  0001 C CNN
 	1    9050 5000
 	0    1    1    0   
 $EndComp
+$Comp
+L Regulator_Linear:L7805 U7
+U 1 1 5EE03F14
+P 4850 3300
+F 0 "U7" H 4850 3542 50  0000 C CNN
+F 1 "L7805" H 4850 3451 50  0000 C CNN
+F 2 "Package_TO_SOT_SMD:TO-252-3_TabPin4" H 4875 3150 50  0001 L CIN
+F 3 "http://www.st.com/content/ccc/resource/technical/document/datasheet/41/4f/b3/b0/12/d4/47/88/CD00000444.pdf/files/CD00000444.pdf/jcr:content/translations/en.CD00000444.pdf" H 4850 3250 50  0001 C CNN
+	1    4850 3300
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0148
+U 1 1 5EE0400D
+P 4850 3600
+F 0 "#PWR0148" H 4850 3350 50  0001 C CNN
+F 1 "GND" H 4855 3427 50  0000 C CNN
+F 2 "" H 4850 3600 50  0001 C CNN
+F 3 "" H 4850 3600 50  0001 C CNN
+	1    4850 3600
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+12V #PWR0149
+U 1 1 5EE04058
+P 4550 3300
+F 0 "#PWR0149" H 4550 3150 50  0001 C CNN
+F 1 "+12V" H 4565 3473 50  0000 C CNN
+F 2 "" H 4550 3300 50  0001 C CNN
+F 3 "" H 4550 3300 50  0001 C CNN
+	1    4550 3300
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR0150
+U 1 1 5EE040A3
+P 5150 3300
+F 0 "#PWR0150" H 5150 3150 50  0001 C CNN
+F 1 "+5V" H 5165 3473 50  0000 C CNN
+F 2 "" H 5150 3300 50  0001 C CNN
+F 3 "" H 5150 3300 50  0001 C CNN
+	1    5150 3300
+	1    0    0    -1  
+$EndComp
+Text Notes 4150 3000 0    50   ~ 0
+5v Power Supply
+Wire Notes Line
+	4100 2900 5600 2900
+Wire Notes Line
+	5600 2900 5600 3850
+Wire Notes Line
+	5600 3850 4100 3850
+Wire Notes Line
+	4100 3850 4100 2900
 $EndSCHEMATC
