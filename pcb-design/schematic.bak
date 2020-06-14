@@ -387,7 +387,7 @@ U 1 1 5EB86BA7
 P 5050 2300
 F 0 "U4" H 5050 2542 50  0000 C CNN
 F 1 "AP1117-33" H 5050 2451 50  0000 C CNN
-F 2 "Package_TO_SOT_SMD:SOT-223-3_TabPin2" H 5050 2500 50  0001 C CNN
+F 2 "Package_SIP:SIP3_11.6x8.5mm" H 5050 2500 50  0001 C CNN
 F 3 "http://www.diodes.com/datasheets/AP1117.pdf" H 5150 2050 50  0001 C CNN
 	1    5050 2300
 	1    0    0    -1  
@@ -695,7 +695,7 @@ U 1 1 5EE03F14
 P 4850 3300
 F 0 "U7" H 4850 3542 50  0000 C CNN
 F 1 "L7805" H 4850 3451 50  0000 C CNN
-F 2 "Package_TO_SOT_SMD:TO-252-3_TabPin4" H 4875 3150 50  0001 L CIN
+F 2 "Package_SIP:SIP3_11.6x8.5mm" H 4875 3150 50  0001 L CIN
 F 3 "http://www.st.com/content/ccc/resource/technical/document/datasheet/41/4f/b3/b0/12/d4/47/88/CD00000444.pdf/files/CD00000444.pdf/jcr:content/translations/en.CD00000444.pdf" H 4850 3250 50  0001 C CNN
 	1    4850 3300
 	1    0    0    -1  
