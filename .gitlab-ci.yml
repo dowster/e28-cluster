@@ -27,7 +27,9 @@ build-schematics:
   image: registry.gitlab.com/dowster/eeshow:latest
   script:
     - cd pcb-design
-    - eeplot -o ../pcb-design-${CI_COMMIT_REF_SLUG}-${CI_PIPELINE_ID}.pdf schematic.pro
+    - eeplot -o ../pcb-schematic-${CI_COMMIT_REF_SLUG}-${CI_PIPELINE_ID}.pdf schematic.pro
+    - eeplot -o ../pcb-layout-${CI_COMMIT_REF_SLUG}-${CI_PIPELINE_ID}.pdf schematic.kicad_pcb
   artifacts:
     paths:
-      - pcb-design-${CI_COMMIT_REF_SLUG}-${CI_PIPELINE_ID}.pdf
+      - pcb-schematic-${CI_COMMIT_REF_SLUG}-${CI_PIPELINE_ID}.pdf
+      - pcb-layout-${CI_COMMIT_REF_SLUG}-${CI_PIPELINE_ID}.pdf
