@@ -5,6 +5,11 @@ E28 Cluster Driver is (going to be...) an ESP32 based driver board which allows 
 # Build Status
 [![Build Status](https://travis-ci.org/dowster/e28-cluster.svg?branch=master)](https://travis-ci.org/dowster/e28-cluster)
 
+# ESP IDF Version
+v4.2
+
+:)
+
 # E28 Cluster Driver Inputs
 
 Input to the E28 cluster driver shall be done via CAN Bus and possibly with a web based interface for diagnostics, calibration, and configuration. The CAN input shall be configurable so that any value on a can message may be mapped to any of the outputs, allowing the potential for configuring the driver with custom cluster gauge faces. IE: using the econometer to show watts / mile. 

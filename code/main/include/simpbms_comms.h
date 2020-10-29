@@ -4,13 +4,17 @@
  * data from the Volt/Ampera packs if I need more.
  */
 
-#ifndef E28_CLUSTER_SIMPBMS_COMMS
-#define E28_CLUSTER_SIMPBMS_COMMS
-
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 #include <esp_log.h>
 #include <driver/can.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#ifndef E28_CLUSTER_SIMPBMS_COMMS
+#define E28_CLUSTER_SIMPBMS_COMMS
 
 #define SIMPBMS_MSG_ID_LIMITS          0x351
 #define SIMPBMS_MSG_ID_SOC             0x355
@@ -20,63 +24,63 @@
 /**
  * Discharge current limit in .1 A
  */
-uint16_t simpbms_limit_discharge_current;
+extern uint16_t simpbms_limit_discharge_current;
 
 /**
  * Discharge voltage limit in .1 V
  */
-uint16_t simpbms_limit_discharge_voltage;
+extern uint16_t simpbms_limit_discharge_voltage;
 
 /**
  * Charge current limit in .1 A
  */
-uint16_t simpbms_limit_charge_current;
+extern uint16_t simpbms_limit_charge_current;
 
 /**
  * Charge voltage limit in .1 V
  */
-uint16_t simpbms_limit_charge_voltage;
+extern uint16_t simpbms_limit_charge_voltage;
 
 /**
  * Battery SOC in 1 %
  */
-uint16_t simpbms_battery_soc;
+extern uint16_t simpbms_battery_soc;
 
 /**
  * Battery SOH in 1 %
  */
-uint16_t simpbms_battery_soh;
+extern uint16_t simpbms_battery_soh;
 
 /**
  * Battery SOC in 0.01 %
  */
-uint16_t simpbms_battery_soc_granular;
+extern uint16_t simpbms_battery_soc_granular;
 
 
 /**
  * Battery voltage in 0.01 V
  */
-uint16_t simpbms_status_voltage;
+extern uint16_t simpbms_status_voltage;
 
 /**
  * Battery current in .1 A
  */
-uint16_t simpbms_status_current;
+extern uint16_t simpbms_status_current;
 
 /**
  * Battery temp in 0.1 deg C
  */
-uint16_t simpbms_status_temp;
+extern uint16_t simpbms_status_temp;
 
-bool simpbms_warning_undervoltage;
-bool simpbms_warning_overvoltage;
-bool simpbms_warning_overtemp;
-bool simpbms_warning_undertemp;
+extern bool simpbms_warning_undervoltage;
+extern bool simpbms_warning_overvoltage;
+extern bool simpbms_warning_overtemp;
+extern bool simpbms_warning_undertemp;
 
-bool simpbms_alarm_undervoltage;
-bool simpbms_alarm_overvoltage;
-bool simpbms_alarm_overtemp;
-bool simpbms_alarm_undertemp;
+extern bool simpbms_alarm_undervoltage;
+extern bool simpbms_alarm_overvoltage;
+extern bool simpbms_alarm_overtemp;
+extern bool simpbms_alarm_undertemp;
 
 /**
  * 
@@ -98,4 +102,8 @@ void simpbms_process_status(can_message_t *message);
  */
 void simpbms_process_warnings(can_message_t *message);
 
+#endif
+
+#ifdef __cplusplus
+}
 #endif
