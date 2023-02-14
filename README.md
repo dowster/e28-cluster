@@ -2,6 +2,8 @@
 
 E28 Cluster Driver is (going to be...) an ESP32 based driver board which allows the E28, and possibly E21/E30, cluster to be controlled via custom inputs. For the first version custom input will be done solely via CAN Bus. There won't be any hardcoded message spec, that will be configurable by the user after firmware has been flashed. 
 
+> Main repository is at https://gitlab.com/dowster/e28-cluster
+
 # Build Status
 [![Build Status](https://travis-ci.org/dowster/e28-cluster.svg?branch=master)](https://travis-ci.org/dowster/e28-cluster)
 
