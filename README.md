@@ -7,6 +7,11 @@ E28 Cluster Driver is (going to be...) an ESP32 based driver board which allows 
 # Build Status
 [![Build Status](https://travis-ci.org/dowster/e28-cluster.svg?branch=master)](https://travis-ci.org/dowster/e28-cluster)
 
+## Hardware
+
+- ESP32
+- [GD32VF103RBT6](https://www.mouser.com/ProductDetail/GigaDevice/GD32VF103RBT6)
+
 # ESP IDF Version
 v4.2
 
