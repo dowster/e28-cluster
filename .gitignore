@@ -7,3 +7,4 @@ code/.vscode/settings.json
 workspace.code-workspace
 pcb-design/*.sch-bak
 pcb-design/target
+.DS_Store
